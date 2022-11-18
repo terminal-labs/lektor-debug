@@ -47,10 +47,10 @@ class DebugPlugin(Plugin):
     name = 'Lektor Debug'
     description = 'A Lektor Plugin for Debugging Help'
 
-    # TODO run this on all builds. on_before_build_all seems to sometimes error
+    # XXX Occaisionally using on_before_build_all seems to sometimes error
     # with `TemplateSyntaxError: Encountered unknown tag 'debug'` and sometimes not.
-    # def on_before_build_all(self, builder, **extra):
-    def on_server_spawn(self, **extras):
+    # Why? fixme
+    def on_before_build_all(self, builder, **extra):
         if "jinja2.ext.DebugExtension" in self.env.jinja_env.extensions:
             del self.env.jinja_env.extensions["jinja2.ext.DebugExtension"]
 
