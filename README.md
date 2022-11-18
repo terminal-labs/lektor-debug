@@ -1,5 +1,9 @@
 ## Lektor Debug
 
+Example ran on the [Lektor Example Project's](https://github.com/lektor/lektor/tree/master/example) `/type` page:
+
+[example.webm](https://user-images.githubusercontent.com/3431410/202814020-6fa35a2e-2227-436a-8555-2e7090a662a6.webm)
+
 This Plugin provides a `{% debug %}` template tag that will render helpful debugging information in a template. To use, simply add this tag in a template, and run lektor server in development mode with `LEKTOR_DEV=1 lektor server`.
 
 This plugin replaces Lektor's built-in, optional `{% debug %}` tag from Jinja2's Debug Extension. That tag is completely superceded by this plugins, so we just replace it.
