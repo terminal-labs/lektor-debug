@@ -2,7 +2,7 @@
 
 Example ran on the [Lektor Example Project's](https://github.com/lektor/lektor/tree/master/example) `/type` page:
 
-![example.gif](./example.gif)
+![example.gif](https://raw.githubusercontent.com/terminal-labs/lektor-debug/main/example.gif)
 
 This Plugin provides a `{% debug %}` template tag that will render helpful debugging information in a template. To use, simply add this tag in a template, and run lektor server in development mode with `LEKTOR_DEV=1 lektor server`.
 

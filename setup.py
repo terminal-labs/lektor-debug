@@ -25,7 +25,7 @@ setup(
     packages=find_packages(),
     py_modules=['lektor_debug'],
     url='https://github.com/terminal-labs/lektor-debug',
-    version='0.1.3',
+    version='0.1.4',
     classifiers=[
         'Framework :: Lektor',
         'Environment :: Plugins',
