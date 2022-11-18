@@ -1,0 +1,12 @@
+dist
+build
+.coverage
+.tox
+flymd*
+*.pyc
+*.pyo
+*.egg-info
+*~
+*#
+.#*
+*.org
