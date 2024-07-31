@@ -1,0 +1,29 @@
+<div id="device-info">
+  <div class="info">Actual Width: <span id="actual-width"></span></div>
+  <div class="info">Device Width: <span id="device-width"></span></div>
+  <div class="info">Resolution: <span id="resolution"></span></div>
+  <div class="info">Orientation: <span id="orientation"></span></div>
+  <div class="info">Device Pixel Ratio: <span id="pixel-ratio"></span></div>
+</div>
+<script>
+  function getDeviceInfo() {
+    const actualWidth = window.innerWidth;
+    const deviceWidth = screen.width;
+    const resolution = `${screen.width}x${screen.height}`;
+    const orientation = screen.orientation ? screen.orientation.type : (actualWidth > window.innerHeight ? 'landscape' : 'portrait');
+    const pixelRatio = window.devicePixelRatio;
+
+    document.getElementById('actual-width').textContent = actualWidth + ' px';
+    document.getElementById('device-width').textContent = deviceWidth + ' px';
+    document.getElementById('resolution').textContent = resolution;
+    document.getElementById('orientation').textContent = orientation;
+    document.getElementById('pixel-ratio').textContent = pixelRatio;
+  }
+
+    // Initial call to populate the information
+  getDeviceInfo();
+
+    // Update the information when the window is resized or orientation changes
+  window.addEventListener('resize', getDeviceInfo);
+  window.addEventListener('orientationchange', getDeviceInfo);
+</script>

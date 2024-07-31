@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import pprint
+from pathlib import Path
 
 from jinja2.ext import DebugExtension
 from markupsafe import Markup
@@ -9,8 +10,14 @@ from lektor.pluginsystem import Plugin
 from lektor.markdown import Markdown
 from lektor.types.flow import FlowDescriptor
 
+
 class LektorDebugExtension(DebugExtension):
     """Jinja extension for Lektor to replace Jinja's native Debug extension"""
+    def _device_info_html(self):
+        device_info = Path(__file__).parent / "device_info.html"
+        with open(device_info) as fp:
+            return fp.read()
+
     def _render(self, context) -> str:
         if not os.environ.get("LEKTOR_DEV") == "1":
             return ""
@@ -40,7 +47,12 @@ class LektorDebugExtension(DebugExtension):
         options = {'type': 'markdown'}
         record = context['this']
         md = Markdown(md_str, record, options)
-        return Markup(f"<details><summary>DEBUG INFO -></summary>{md}</details>")
+        device = self._device_info_html()
+        return Markup(
+            f"<details><summary>DEBUG INFO -></summary>{md}</details>"
+            "<br><br>"
+            f"<details><summary>DEVICE INFO -></summary>{device}</details>"
+        )
 
 
 class DebugPlugin(Plugin):
