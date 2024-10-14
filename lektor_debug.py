@@ -4,15 +4,15 @@ import pprint
 from pathlib import Path
 
 from jinja2.ext import DebugExtension
-from markupsafe import Markup
-
-from lektor.pluginsystem import Plugin
 from lektor.markdown import Markdown
+from lektor.pluginsystem import Plugin
 from lektor.types.flow import FlowDescriptor
+from markupsafe import Markup
 
 
 class LektorDebugExtension(DebugExtension):
     """Jinja extension for Lektor to replace Jinja's native Debug extension"""
+
     def _device_info_html(self):
         device_info = Path(__file__).parent / "device_info.html"
         with open(device_info) as fp:
@@ -24,28 +24,30 @@ class LektorDebugExtension(DebugExtension):
 
         raw = {}
 
-        this = context.get('this')  # not always present
+        this = context.get("this")  # not always present
         if this:
-            data = getattr(this, '_data', None)
+            data = getattr(this, "_data", None)
             if data:
-                raw['this.fields'] = data
+                raw["this.fields"] = data
                 for k, v in data.items():
                     if isinstance(v, FlowDescriptor):
                         raw[f"flow: this.{k}.blocks"] = v._blocks
-            raw['dir(this)'] = dir(this)
+            raw["dir(this)"] = dir(this)
 
-        raw.update({
-            "context": context.get_all(),
-            "filters": sorted(self.environment.filters.keys()),
-            "tests": sorted(self.environment.tests.keys()),
-        })
+        raw.update(
+            {
+                "context": context.get_all(),
+                "filters": sorted(self.environment.filters.keys()),
+                "tests": sorted(self.environment.tests.keys()),
+            }
+        )
         md_str = f"""\
 ```python
 {pprint.pformat(raw, depth=3, compact=True)}
 ```
 """
-        options = {'type': 'markdown'}
-        record = context['this']
+        options = {"type": "markdown"}
+        record = context["this"]
         md = Markdown(md_str, record, options)
         device = self._device_info_html()
         return Markup(
@@ -56,8 +58,8 @@ class LektorDebugExtension(DebugExtension):
 
 
 class DebugPlugin(Plugin):
-    name = 'Lektor Debug'
-    description = 'A Lektor Plugin for Debugging Help'
+    name = "Lektor Debug"
+    description = "A Lektor Plugin for Debugging Help"
 
     # XXX Occaisionally using on_before_build_all seems to sometimes error
     # with `TemplateSyntaxError: Encountered unknown tag 'debug'` and sometimes not.
@@ -71,6 +73,6 @@ class DebugPlugin(Plugin):
         self.env.jinja_env.add_extension(LektorDebugExtension)
 
     def on_setup_env(self, **extra):
-        self.env.jinja_env.globals['str'] = str
-        self.env.jinja_env.globals['dir'] = dir
-        self.env.jinja_env.globals['type'] = type
+        self.env.jinja_env.globals["str"] = str
+        self.env.jinja_env.globals["dir"] = dir
+        self.env.jinja_env.globals["type"] = type
